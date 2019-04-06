@@ -36,7 +36,7 @@ function getLangLat(){
 function showForecast(weather){
   document.getElementById('forecast').innerHTML = `
   <div class="col-6">
-    <img src="./images/${weather.currently.icon}.png" width="90%" height="auto">
+    <img src="./images/${weather.currently.icon}.png" width="90%" height="auto" alt="${weather.currently.summary}">
   </div>
   <div class="col-6">
     <h1>${weather.currently.summary}</h1>
