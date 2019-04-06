@@ -1,4 +1,4 @@
-let obj;
+let weather;
 
 function getWeather(lat,lng){
   let http = new XMLHttpRequest();
@@ -7,8 +7,8 @@ function getWeather(lat,lng){
   http.send();
   http.onreadystatechange = function(){
     if(http.readyState==4 && http.status==200){
-      obj = JSON.parse(http.responseText);
-      console.log(obj);
+      weather = JSON.parse(http.responseText);
+      showForecast(weather);
     }
   }
 }
@@ -23,11 +23,36 @@ function getLangLat(){
   http.open('GET', url, true);
   http.send();
   http.onreadystatechange = function(){
-    console.log(http.status)
     if(http.readyState==4 && http.status==200){
-      console.log(http.responseText);
       data = JSON.parse(http.responseText);
       getWeather(data.results[0].geometry.lat,data.results[0].geometry.lng);
+      localStorage.setItem('lat',data.results[0].geometry.lat);
+      localStorage.setItem('lng',data.results[0].geometry.lng);
+      localStorage.setItem('location',location);
     }
+  }
+}
+
+function showForecast(weather){
+  document.getElementById('forecast').innerHTML = `
+  <div class="col-6">
+    <img src="./images/${weather.currently.icon}.png" width="90%" height="auto">
+  </div>
+  <div class="col-6">
+    <h1>${weather.currently.summary}</h1>
+    <p >Temperatura: ${Math.round(weather.currently.temperature)}°C</p>
+    <p >Vlaznost zraka: ${weather.currently.humidity*100}%</p>
+    <p >Brzina vjetra: ${(weather.currently.windSpeed*3.6).toFixed(2)}km/h</p>
+  </div>
+    `;
+}
+
+function checkStorage(){
+  let lat = localStorage.getItem('lat');
+  let lng = localStorage.getItem('lng');
+  let loc = localStorage.getItem('location');
+  if(lat && lng){
+    getWeather(lat,lng);
+    document.getElementsByName('location')[0].value=loc;
   }
 }

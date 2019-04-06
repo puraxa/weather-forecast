@@ -1,12 +1,26 @@
 <!doctype html>
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
     <script src="./scripts/script.js"></script>
     <meta charset="UTF-8">
   </head>
-  <body onload="getWeather()">
-    <input type="text" name="location">
-    <button onclick="getLangLat()">Vrijeme</button>
+  <body onload="checkStorage()">
+    <div class="container">
+      <br>
+      <br>
+      <div class="center">
+          <div class="input-group mb-3">
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Unesite grad" name="location">
+                  <div class="input-group-append">
+                  <button type="button" class="btn btn-secondary" onclick="getLangLat()">Prikazi prognozu</button>
+                  </div>
+              </div>
+      </div>
+      <div id="forecast" class="row"></div>
+    </div>
   </body>
 </html>
